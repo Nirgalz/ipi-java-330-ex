@@ -1,3 +1,6 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@include file="tags/header.jsp"%>
+
 <div class="container">
     <div class="jumbotron">
         <h1>Bienvenue dans l'interface de gestion des <span></span> employés !</h1>
@@ -51,4 +54,4 @@
         </ul>
     </div>
 </div>
-
+<%@include file="tags/footer.jsp"%>
