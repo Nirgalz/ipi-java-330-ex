@@ -12,7 +12,7 @@
     <h2>Détail du ${employe.className} ${employe.matricule}</h2>
 
     <div class="row">
-        <form id="saveForm" action="${employe.className.toLowerCase()}s/${employe.id}" method="post">
+        <form id="saveForm" action="/<%= emp.getClassName().toLowerCase() + "s"%>/<%= emp.getId() == null ? "save" : emp.getId() %>" method="post">
         <div class="col-lg-6">
             <div class="form-group">
                 <label class="form-control-label" for="nom">Nom</label>
@@ -86,7 +86,7 @@
         </form>
         <div class="col-lg-6">
             <input form="saveForm" class="btn btn-primary" type="submit" value="Enregistrer"/>
-                <a href="" class="btn btn-danger">Supprimer</a>
+                <a href="/employes/${employe.id}/delete" class="btn btn-danger">Supprimer</a>
         </div>
         <div class="col-lg-6">
             <% if (emp instanceof Manager && emp.getId() != null) {%>

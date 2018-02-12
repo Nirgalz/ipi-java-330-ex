@@ -18,6 +18,9 @@ public class TechnicienService {
     @Autowired
     private TechnicienRepository technicienRepository;
 
+    public Technicien creerEmploye(Technicien t) {
+        return technicienRepository.save(t);
+    }
     public Manager addManager(Long idTechnicien, String matricule) {
         Technicien t = technicienRepository.findOne(idTechnicien);
         if(t == null){

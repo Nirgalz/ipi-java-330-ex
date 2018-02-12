@@ -2,6 +2,7 @@ package com.ipiecoles.java.java320.controller;
 
 import com.ipiecoles.java.java320.model.Commercial;
 import com.ipiecoles.java.java320.model.Employe;
+import com.ipiecoles.java.java320.model.Manager;
 import com.ipiecoles.java.java320.model.Technicien;
 import com.ipiecoles.java.java320.service.EmployeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.awt.*;
 import java.util.Map;
@@ -39,6 +43,19 @@ public class EmployesController {
           return "";
         }
     }
+
+    @RequestMapping(value = "{id}/delete", method = RequestMethod.GET)
+    public RedirectView deleteEmploye(@PathVariable(value = "id") Long id, RedirectAttributes attributes) {
+        employeService.deleteEmploye(id);
+        attributes.addAttribute("page", 0);
+        attributes.addAttribute("size", 10);
+        attributes.addAttribute("sortProperty", "matricule");
+        attributes.addAttribute("sortDirection", "ASC");
+
+        return new RedirectView("/employes");
+    }
+
+
 
     @RequestMapping(value = "" , method = RequestMethod.GET)
     public  String getSortableEmployesOrbyMatricule(
@@ -79,19 +96,22 @@ public class EmployesController {
     }
 
     @RequestMapping(
-            value = "employes/new/{type}",
-            method = {
-                    RequestMethod.GET,
-                    RequestMethod.POST
-            }
-//            ,
-//            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+            value = "new/{type}"
     )
     public String createEmployeByType(
             @PathVariable(value = "type", required = false) String type,
-            @RequestBody (required=false) MultiValueMap<String, Employe> postContent,
-            Map<String, Employe>modelType
+            Map<String, Object> model, Object emp
     ) {
+
+        if (type.equals("commercial")){
+             emp = new Commercial();
+        } else if (type.equals("technicien")) {
+            emp = new Technicien();
+        } else if (type.equals("manager")){
+            emp = new Manager();
+        }
+
+        model.put("employe", emp);
 
 //            if (type.equals("commercial")) {
 //                Commercial employe = new Commercial();

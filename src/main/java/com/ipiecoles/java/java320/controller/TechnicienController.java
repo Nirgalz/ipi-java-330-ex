@@ -2,28 +2,32 @@ package com.ipiecoles.java.java320.controller;
 
 import com.ipiecoles.java.java320.model.Commercial;
 import com.ipiecoles.java.java320.model.Employe;
+import com.ipiecoles.java.java320.model.Technicien;
 import com.ipiecoles.java.java320.service.CommercialService;
 import com.ipiecoles.java.java320.service.EmployeService;
+import com.ipiecoles.java.java320.service.TechnicienService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.awt.*;
 import java.util.Map;
 
+
 @Controller
-public class CommercialController {
+public class TechnicienController {
+
+
 
     @Autowired
-    CommercialService commercialService;
+    TechnicienService technicienService;
     @Autowired
     EmployeService employeService;
 
-    @PostMapping("employes/commercials/{id}")
-    public  RedirectView editCommercial(@PathVariable("id") Long id,  Commercial employe, Map<String, Object> model, RedirectAttributes attributes) {
+    @PostMapping("/techniciens/{id}")
+    public RedirectView editechnicien(@PathVariable("id") Long id, Technicien employe, Map<String, Object> model, RedirectAttributes attributes) {
         if (employe != null) {
             employe = this.employeService.updateEmploye(id, employe);
         }
@@ -33,12 +37,10 @@ public class CommercialController {
         return new RedirectView("/employes/" + id);
     }
 
-    @PostMapping("/commercials/save")
-    public RedirectView saveNew(Commercial employe, Map<String,Employe> model, RedirectAttributes attributes) {
-        employe = commercialService.creerEmploye(employe);
+    @PostMapping("/techniciens/save")
+    public RedirectView saveNew(Technicien employe, Map<String,Employe> model, RedirectAttributes attributes) {
+        employe = employeService.creerEmploye(employe);
         model.put("employe", employe);
         return new RedirectView("/employes/" + employe.getId());
     }
-
-
 }
